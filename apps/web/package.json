@@ -75,7 +75,7 @@
     "react-slider": "2.0.4",
     "react-virtualized-auto-sizer": "1.0.7",
     "sharp": "0.32.6",
-    "strapi-sdk-js": "2.3.3",
+    "strapi-sdk-js": "^2.3.3",
     "sushi": "workspace:*",
     "swr": "2.1.5",
     "tiny-invariant": "1.3.1",
