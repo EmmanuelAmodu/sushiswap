@@ -2,6 +2,8 @@ import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
 import React from 'react'
 import { getFaqTopic } from '../../../lib/strapi/topic'
 
+export const revalidate = 900
+
 export default async function Layout({
   children,
   params,

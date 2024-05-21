@@ -2,6 +2,8 @@ import { Container } from '@sushiswap/ui'
 import { AnswerGroupAnswerSelector } from '../../../components/answer-group-answer-selector'
 import { getFaqTopic } from '../../../lib/strapi/topic'
 
+export const revalidate = 900
+
 export default async function FaqTopicPage({
   params,
 }: {

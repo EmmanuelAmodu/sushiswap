@@ -1,8 +1,10 @@
 'use client'
 
+import { ChevronDownIcon } from '@heroicons/react-v1/solid'
 import { classNames } from '@sushiswap/ui'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
+import { useCallback, useState } from 'react'
 import { AnswerGroup } from '../lib/strapi/answerGroup'
 
 function replaceLast(path: string, search: string, replace: string) {
@@ -36,7 +38,68 @@ function SidebarEntry({ answer }: { answer: AnswerGroup['answers'][number] }) {
   )
 }
 
-export function AnswerGroupSidebar({
+export function AnswerGroupSidebarMobile({
+  answerGroup,
+}: { answerGroup: AnswerGroup }) {
+  const params = useParams<{ 'answer-id': string }>()
+
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(
+    answerGroup.answers.find((answer) => answer.slug === params['answer-id'])!,
+  )
+
+  const onSelect = useCallback((answer: AnswerGroup['answers'][number]) => {
+    setOpen(false)
+    // setActive(answer)
+  }, [])
+
+  return (
+    <div
+      className={classNames(
+        'font-semibold text-sm transition-[height]  border py-4 px-[18px] rounded-lg',
+        'border-[#BFBFBF] bg-[#F2F2F2]',
+        'dark:border-[#4D5562] dark:bg-[#252B3A]',
+      )}
+    >
+      <div
+        className="flex justify-between items-center cursor-pointer"
+        onClick={() => setOpen(!open)}
+        onKeyUp={() => setOpen(!open)}
+      >
+        <span>{active.name}</span>
+        <div
+          className={classNames(
+            open && 'rotate-180',
+            'transition-all text-[#4D5562] h-6 w-6',
+          )}
+        >
+          <ChevronDownIcon />
+        </div>
+      </div>
+      <div
+        className={classNames(
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+          'transition-[grid-template-rows] grid [&>*]:overflow-hidden',
+        )}
+      >
+        <div className="space-y-3">
+          <div className="h-3" />
+          {answerGroup.answers.map((answer) => (
+            <div
+              key={answer.slug}
+              onClick={() => onSelect(answer)}
+              onKeyUp={() => onSelect(answer)}
+            >
+              <SidebarEntry answer={answer} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function AnswerGroupSidebarDesktop({
   answerGroup,
 }: { answerGroup: AnswerGroup }) {
   return (

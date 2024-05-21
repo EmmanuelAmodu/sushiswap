@@ -24,7 +24,7 @@ function Question({ question, url }: MostSearchedListEntry) {
   )
 }
 
-function MostSearchedTopicsDesktop({
+function MostSearchedQuestionsDesktop({
   questions,
 }: { questions: MostSearchedListEntry[] }) {
   const firstHalf = questions.slice(0, Math.ceil(questions.length / 2))
@@ -50,7 +50,7 @@ function MostSearchedTopicsDesktop({
   )
 }
 
-function MostSearchedTopicsMobile({
+function MostSearchedQuestionsMobile({
   questions,
 }: { questions: MostSearchedListEntry[] }) {
   return (
@@ -64,19 +64,19 @@ function MostSearchedTopicsMobile({
   )
 }
 
-export async function MostSearchedTopics() {
+export async function MostSearchedQuestions() {
   const questions = await getFaqMostSearchedList()
 
   return (
     <div className="flex flex-col space-y-8 md:space-y-12">
-      <div className="text-2xl font-medium">Most Searched Topics</div>
+      <div className="text-2xl font-medium">Most Searched Questions</div>
 
       <div>
         <div className="md:block hidden">
-          <MostSearchedTopicsDesktop questions={questions} />
+          <MostSearchedQuestionsDesktop questions={questions} />
         </div>
         <div className="md:hidden block">
-          <MostSearchedTopicsMobile questions={questions} />
+          <MostSearchedQuestionsMobile questions={questions} />
         </div>
       </div>
     </div>

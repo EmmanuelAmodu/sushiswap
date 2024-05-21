@@ -2,6 +2,8 @@ import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
 import React from 'react'
 import { getFaqProduct } from 'src/app/faq/lib/strapi/product'
 
+export const revalidate = 900
+
 export default async function Layout({
   children,
   params,

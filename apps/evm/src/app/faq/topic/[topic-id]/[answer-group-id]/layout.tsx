@@ -3,6 +3,8 @@ import React from 'react'
 import { getFaqAnswerGroup } from 'src/app/faq/lib/strapi/answerGroup'
 import AnswerGroupLayout from '../../../components/answer-group-layout'
 
+export const revalidate = 900
+
 // Prepared for topic-specific styling
 export default async function Layout({
   children,

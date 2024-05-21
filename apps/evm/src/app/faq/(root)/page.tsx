@@ -2,10 +2,10 @@ import { typographyVariants } from '@sushiswap/ui'
 import { GetInTouch } from './components/get-in-touch'
 import { HelpByProducts } from './components/help-by-products'
 import { HelpByTopics } from './components/help-by-topics'
-import { MostSearchedTopics } from './components/most-searched-topics'
+import { MostSearchedQuestions } from './components/most-searched-questions'
 import { SearchBox } from './components/search-box'
 
-export const revalidate = 300
+export const revalidate = 3600
 
 export default async function Page() {
   return (
@@ -25,7 +25,7 @@ export default async function Page() {
         </div>
       </div>
       <div className="max-w-6xl lg:px-[120px] md:px-[80px] w-full px-5 space-y-20 md:space-y-28">
-        <MostSearchedTopics />
+        <MostSearchedQuestions />
         <HelpByTopics />
         <HelpByProducts />
       </div>

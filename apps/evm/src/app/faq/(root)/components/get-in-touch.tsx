@@ -22,7 +22,7 @@ function Block({ title, button, icon: Icon }: Block) {
       <div className="relative w-[55px] aspect-1">
         <div className="absolute opacity-20 rounded-full bg-blue-500 w-[55px] aspect-1 bottom-0 right-0" />
         <div className="absolute opacity-20 rounded-full bg-[#F338C3] w-[52px] aspect-1 bottom-0 right-0" />
-        <div className="absolute w-[55px] aspect-1 bottom-0 right-0 flex justify-center items-center pl-px text-white dark:text-black">
+        <div className="absolute w-[55px] aspect-1 bottom-0 right-0 flex justify-center items-center pl-px text-white">
           <Icon width={26} height={26} />
         </div>
       </div>
