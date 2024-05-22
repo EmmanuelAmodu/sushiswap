@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react-v1/solid'
 import { classNames } from '@sushiswap/ui'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { AnswerGroup } from '../lib/strapi/answerGroup'
 
 function replaceLast(path: string, search: string, replace: string) {
@@ -44,14 +44,11 @@ export function AnswerGroupSidebarMobile({
   const params = useParams<{ 'answer-id': string }>()
 
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState(
-    answerGroup.answers.find((answer) => answer.slug === params['answer-id'])!,
-  )
-
-  const onSelect = useCallback((answer: AnswerGroup['answers'][number]) => {
-    setOpen(false)
-    // setActive(answer)
-  }, [])
+  const active = useMemo(() => {
+    return answerGroup.answers.find(
+      (answer) => answer.slug === params['answer-id'],
+    )!
+  }, [params, answerGroup.answers])
 
   return (
     <div
@@ -87,8 +84,8 @@ export function AnswerGroupSidebarMobile({
           {answerGroup.answers.map((answer) => (
             <div
               key={answer.slug}
-              onClick={() => onSelect(answer)}
-              onKeyUp={() => onSelect(answer)}
+              onClick={() => setOpen(!open)}
+              onKeyUp={() => setOpen(!open)}
             >
               <SidebarEntry answer={answer} />
             </div>
