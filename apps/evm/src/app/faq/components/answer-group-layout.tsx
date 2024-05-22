@@ -43,13 +43,13 @@ export default async function AnswerGroupLayout({
   const answerGroup = await getFaqAnswerGroup(params['answer-group-id'])
 
   return (
-    <div className="border-t border-accent w-full flex justify-center">
-      <div className="md:block hidden w-full">
+    <div className="border-t border-accent w-full">
+      <div className="md:flex hidden w-full justify-center">
         <AnswerGroupLayoutDesktop answerGroup={answerGroup}>
           {children}
         </AnswerGroupLayoutDesktop>
       </div>
-      <div className="w-full md:hidden block">
+      <div className="w-full md:hidden flex justify-center">
         <AnswerGroupLayoutMobile answerGroup={answerGroup}>
           {children}
         </AnswerGroupLayoutMobile>

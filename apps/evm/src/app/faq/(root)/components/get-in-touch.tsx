@@ -37,7 +37,7 @@ export function GetInTouch() {
         title={`Can’t find what you are looking for?`}
         button={{
           text: `Chat with us`,
-          link: '',
+          link: 'https://discord.com/channels/748031363935895552/1141943831898636410',
         }}
         icon={ChatBubbleOvalLeftIcon}
       />
