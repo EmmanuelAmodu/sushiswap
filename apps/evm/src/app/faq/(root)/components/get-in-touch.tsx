@@ -13,11 +13,11 @@ function Block({ title, button, icon: Icon }: Block) {
     <div className="px-7 py-5 flex flex-row justify-between w-full space-x-4 bg-white dark:bg-opacity-5 bg-opacity-[0.12] rounded-xl border border-black border-opacity-30 dark:border-opacity-10 dark:border-white">
       <div className="flex-col flex space-y-5">
         <div>{title}</div>
-        <div>
+        <a target="_blank" rel="noreferrer" href={button.link}>
           <Button size="xs" className="py-2 px-3">
             {button.text}
           </Button>
-        </div>
+        </a>
       </div>
       <div className="relative w-[55px] aspect-1">
         <div className="absolute opacity-20 rounded-full bg-blue-500 w-[55px] aspect-1 bottom-0 right-0" />
