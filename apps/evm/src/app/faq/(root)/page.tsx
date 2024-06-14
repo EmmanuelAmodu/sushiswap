@@ -1,7 +1,7 @@
 import { typographyVariants } from '@sushiswap/ui'
 import { GetInTouch } from './components/get-in-touch'
+import { HelpByCategories } from './components/help-by-categories'
 import { HelpByProducts } from './components/help-by-products'
-import { HelpByTopics } from './components/help-by-topics'
 import { MostSearchedQuestions } from './components/most-searched-questions'
 import { SearchBox } from './components/search-box'
 
@@ -26,7 +26,7 @@ export default async function Page() {
       </div>
       <div className="max-w-6xl lg:px-[120px] md:px-[80px] w-full px-5 space-y-20 md:space-y-28">
         <MostSearchedQuestions />
-        <HelpByTopics />
+        <HelpByCategories />
         <HelpByProducts />
       </div>
     </div>

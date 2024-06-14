@@ -16,11 +16,11 @@ function replaceLast(path: string, search: string, replace: string) {
 }
 
 function SidebarEntry({ answer }: { answer: AnswerGroup['answers'][number] }) {
-  const params = useParams<{ 'answer-id': string }>()
-  const isActive = params['answer-id'] === answer.slug
+  const params = useParams<{ 'answer-slug': string }>()
+  const isActive = params['answer-slug'] === answer.slug
 
   const pathname = usePathname()
-  const href = replaceLast(pathname, params['answer-id'], answer.slug)
+  const href = replaceLast(pathname, params['answer-slug'], answer.slug)
 
   return (
     <div
@@ -38,15 +38,13 @@ function SidebarEntry({ answer }: { answer: AnswerGroup['answers'][number] }) {
   )
 }
 
-export function AnswerGroupSidebarMobile({
-  answerGroup,
-}: { answerGroup: AnswerGroup }) {
-  const params = useParams<{ 'answer-id': string }>()
+export function SidebarMobile({ answerGroup }: { answerGroup: AnswerGroup }) {
+  const params = useParams<{ 'answer-slug': string }>()
 
   const [open, setOpen] = useState(false)
   const active = useMemo(() => {
     return answerGroup.answers.find(
-      (answer) => answer.slug === params['answer-id'],
+      (answer) => answer.slug === params['answer-slug'],
     )!
   }, [params, answerGroup.answers])
 
@@ -96,9 +94,7 @@ export function AnswerGroupSidebarMobile({
   )
 }
 
-export function AnswerGroupSidebarDesktop({
-  answerGroup,
-}: { answerGroup: AnswerGroup }) {
+export function SidebarDesktop({ answerGroup }: { answerGroup: AnswerGroup }) {
   return (
     <div className="space-y-6">
       {answerGroup.answers.map((answer) => (

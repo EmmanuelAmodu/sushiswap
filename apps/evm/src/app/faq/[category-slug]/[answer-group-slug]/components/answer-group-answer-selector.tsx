@@ -4,15 +4,16 @@ import { classNames } from '@sushiswap/ui'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Product } from '../lib/strapi/product'
-import { Topic } from '../lib/strapi/topic'
+import { Category } from '../../../lib/strapi/category'
 
-export function AnswerGroupAnswerSelector({ data }: { data: Topic & Product }) {
+export function AnswerGroupAnswerSelector({ data }: { data: Category }) {
   const pathname = usePathname()
 
   const [selectedAnswerGroup, setSelectedAnswerGroup] = useState(
     data.answerGroups[0],
   )
+
+  if (!selectedAnswerGroup) return null
 
   return (
     <div className="space-y-12">

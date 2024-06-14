@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
-import { getFaqAnswerGroup } from '../lib/strapi/answerGroup'
+import { getFaqAnswerGroup } from '../../lib/strapi/answerGroup'
 
 export const revalidate = 3600
 

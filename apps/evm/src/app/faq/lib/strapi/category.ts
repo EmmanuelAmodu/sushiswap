@@ -59,13 +59,13 @@ const schema = z
   )
   .transform((data) => data[0])
 
-export type Topic = z.infer<typeof schema>
+export type Category = z.infer<typeof schema>
 
-export async function getFaqTopic(id: string) {
-  const { data } = await strapi.find('faq-topics', {
+export async function getFaqCategory(slug: string) {
+  const { data } = await strapi.find('faq-categories', {
     fields: ['name', 'slug'],
     filters: {
-      slug: { $eq: id },
+      slug: { $eq: slug },
     },
     populate: [
       'faqAnswerGroups',

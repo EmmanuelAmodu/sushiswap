@@ -6,8 +6,14 @@ export const imageSchema = z
       id: z.number(),
       attributes: z.object({
         name: z.string(),
-        alternativeText: z.string(),
-        caption: z.string(),
+        alternativeText: z
+          .string()
+          .nullable()
+          .transform((value) => value ?? ''),
+        caption: z
+          .string()
+          .nullable()
+          .transform((value) => value ?? ''),
         width: z.number(),
         height: z.number(),
         formats: z.object({

@@ -1,8 +1,11 @@
 import { classNames } from '@sushiswap/ui'
 import Link from 'next/link'
-import { TopicListEntry, getFaqTopicList } from '../../lib/strapi/topicList'
+import {
+  CategoryListEntry,
+  getFaqCategoryList,
+} from '../../lib/strapi/categoryList'
 
-function Block({ name, url }: TopicListEntry) {
+function Block({ name, url }: CategoryListEntry) {
   return (
     <Link
       href={url}
@@ -17,14 +20,14 @@ function Block({ name, url }: TopicListEntry) {
   )
 }
 
-export async function HelpByTopics() {
-  const topics = await getFaqTopicList()
+export async function HelpByCategories() {
+  const categories = await getFaqCategoryList()
 
   return (
     <div className="md:space-y-12">
-      <div className="text-2xl font-medium">Help By Topics</div>
-      <div>
-        {topics.map((topic) => (
+      <div className="text-2xl font-medium">Help By Categories</div>
+      <div className="flex flex-wrap gap-x-6 gap-y-4">
+        {categories.map((topic) => (
           <Block key={topic.slug} {...topic} />
         ))}
       </div>

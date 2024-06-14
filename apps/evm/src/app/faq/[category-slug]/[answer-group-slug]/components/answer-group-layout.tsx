@@ -1,14 +1,12 @@
-import { AnswerGroup, getFaqAnswerGroup } from '../lib/strapi/answerGroup'
-import {
-  AnswerGroupSidebarDesktop,
-  AnswerGroupSidebarMobile,
-} from './answer-group-sidebar'
+import { Container } from '@sushiswap/ui'
+import { SidebarDesktop, SidebarMobile } from '../../../components/sidebar'
+import { AnswerGroup, getFaqAnswerGroup } from '../../../lib/strapi/answerGroup'
 
 export const revalidate = 900
 
 interface AnswerGroupLayoutProps {
   children: React.ReactNode
-  params: { 'answer-group-id': string }
+  params: { 'answer-group-slug': string }
 }
 
 function AnswerGroupLayoutDesktop({
@@ -16,11 +14,14 @@ function AnswerGroupLayoutDesktop({
   answerGroup,
 }: { children: React.ReactNode; answerGroup: AnswerGroup }) {
   return (
-    <div className="max-w-6xl lg:px-[120px] md:px-[80px] w-full px-5 flex space-x-16 pb-40 pt-24">
-      <AnswerGroupSidebarDesktop answerGroup={answerGroup} />
+    <Container
+      maxWidth="4xl"
+      className="flex justify-between pb-40 pt-24 px-8 space-x-16"
+    >
+      <SidebarDesktop answerGroup={answerGroup} />
       <div className="min-h-full flex dark:bg-slate-600 bg-[#BFBFBF] w-[2px]" />
       {children}
-    </div>
+    </Container>
   )
 }
 
@@ -29,31 +30,33 @@ function AnswerGroupLayoutMobile({
   answerGroup,
 }: { children: React.ReactNode; answerGroup: AnswerGroup }) {
   return (
-    <div className="w-full px-5 pt-8 space-y-8">
-      <AnswerGroupSidebarMobile answerGroup={answerGroup} />
+    <div className="w-full flex flex-col items-center px-5 pt-8 space-y-8">
+      <div className="w-full">
+        <SidebarMobile answerGroup={answerGroup} />
+      </div>
       {children}
     </div>
   )
 }
 
-export default async function AnswerGroupLayout({
+export async function AnswerGroupLayout({
   children,
   params,
 }: AnswerGroupLayoutProps) {
-  const answerGroup = await getFaqAnswerGroup(params['answer-group-id'])
+  const answerGroup = await getFaqAnswerGroup(params['answer-group-slug'])
 
   return (
-    <div className="border-t border-accent w-full">
-      <div className="md:flex hidden w-full justify-center">
+    <>
+      <div className="md:block hidden w-full">
         <AnswerGroupLayoutDesktop answerGroup={answerGroup}>
           {children}
         </AnswerGroupLayoutDesktop>
       </div>
-      <div className="w-full md:hidden flex justify-center">
+      <div className="w-full md:hidden block">
         <AnswerGroupLayoutMobile answerGroup={answerGroup}>
           {children}
         </AnswerGroupLayoutMobile>
       </div>
-    </div>
+    </>
   )
 }

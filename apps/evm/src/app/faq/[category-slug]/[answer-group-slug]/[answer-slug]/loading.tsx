@@ -1,6 +1,6 @@
 import { SkeletonText } from '@sushiswap/ui'
 
-export function AnswerLoading() {
+export default function AnswerLoading() {
   return (
     <div className="prose dark:!prose-invert prose-slate space-y-3 w-full">
       <SkeletonText className="h-[18px]" />

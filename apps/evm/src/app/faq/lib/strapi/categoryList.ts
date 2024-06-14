@@ -16,14 +16,14 @@ const schema = z.array(
     .transform((data) => ({
       name: data.attributes.name,
       slug: data.attributes.slug,
-      url: `/faq/topic/${data.attributes.slug}`,
+      url: `/faq/${data.attributes.slug}`,
     })),
 )
 
-export type TopicListEntry = z.infer<typeof schema>[number]
+export type CategoryListEntry = z.infer<typeof schema>[number]
 
-export async function getFaqTopicList() {
-  const { data } = await strapi.find('faq-topics')
+export async function getFaqCategoryList() {
+  const { data } = await strapi.find('faq-categories')
 
   return schema.parse(data)
 }
