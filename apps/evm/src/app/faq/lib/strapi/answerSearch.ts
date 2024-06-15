@@ -68,12 +68,8 @@ export async function getFaqAnswers(searchString: string) {
 
   const [answers, answerGroups] = await Promise.all([answersP, answerGroupsP])
 
-  console.log(answers)
-
   const answersParsed = answerSchema.parse(answers.data)
   const answerGroupsParsed = answerGroupSchema.parse(answerGroups.data)
-
-  console.log(answersParsed, answerGroupsParsed)
 
   return { answers: answersParsed, answerGroups: answerGroupsParsed }
 }

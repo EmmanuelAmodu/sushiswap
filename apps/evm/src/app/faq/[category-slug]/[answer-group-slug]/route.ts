@@ -8,5 +8,10 @@ export async function GET(request: NextRequest) {
   const pathname = new URL(request.url).pathname
   const answerGroupId = pathname.split('/').slice(-1)[0]
   const answerGroup = await getFaqAnswerGroup(answerGroupId)
+
+  if (!answerGroup) {
+    return redirect(pathname.split('/').slice(0, -1).join('/'))
+  }
+
   redirect(`${pathname}/${answerGroup.defaultAnswer.slug}`)
 }

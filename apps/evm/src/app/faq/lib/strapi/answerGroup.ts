@@ -28,6 +28,13 @@ const schema = z
               }),
             }),
           }),
+          faqCategory: z.object({
+            data: z.object({
+              attributes: z.object({
+                slug: z.string(),
+              }),
+            }),
+          }),
         }),
       })
       .transform((data) => ({
@@ -42,6 +49,7 @@ const schema = z
           name: data.attributes.faqDefaultAnswer.data.attributes.name,
           slug: data.attributes.faqDefaultAnswer.data.attributes.slug,
         },
+        category: { slug: data.attributes.faqCategory.data.attributes.slug },
       })),
   )
   .transform((data) => data[0])
@@ -51,7 +59,7 @@ export type AnswerGroup = z.infer<typeof schema>
 export async function getFaqAnswerGroup(id: string) {
   const { data } = await strapi.find('faq-answer-groups', {
     fields: ['name', 'slug'],
-    populate: ['faqAnswers', 'faqDefaultAnswer'],
+    populate: ['faqAnswers', 'faqDefaultAnswer', 'faqCategory.slug'],
     filters: {
       slug: { $eq: id },
     },

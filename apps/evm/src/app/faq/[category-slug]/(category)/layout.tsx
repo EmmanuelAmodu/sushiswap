@@ -1,6 +1,7 @@
 import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
 import React from 'react'
 import { getFaqCategory } from '../../lib/strapi/category'
+import { CategoryLayout } from './components/category-layout'
 
 export const revalidate = 900
 
@@ -18,19 +19,13 @@ export default async function Layout({
       <div className="dark:bg-[#19202F] bg-[#414a6c05]">
         <Container maxWidth="4xl" className="px-5 md:px-8 pb-14 space-y-6">
           <Breadcrumb replace={{ '-': ' ' }} truncate={false} />
-
           <h1 className={typographyVariants({ variant: 'h1' })}>
             {category.name}
           </h1>
         </Container>
       </div>
       <div className="h-[0.5px] bg-accent w-full" />
-      <Container
-        maxWidth="4xl"
-        className="px-5 md:px-8 flex md:pb-40 md:pt-24 pt-8"
-      >
-        {children}
-      </Container>
+      <CategoryLayout>{children}</CategoryLayout>
     </>
   )
 }
