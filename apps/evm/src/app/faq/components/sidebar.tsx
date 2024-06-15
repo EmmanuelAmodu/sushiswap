@@ -43,7 +43,7 @@ export function SidebarMobile({ entries, param }: Sidebar) {
   const [open, setOpen] = useState(false)
 
   const active = useParams()[param]
-  const activeEntry = entries.find((entry) => entry.slug === active)!
+  const activeEntry = entries.find((entry) => entry.slug === active)
 
   return (
     <div
@@ -58,7 +58,7 @@ export function SidebarMobile({ entries, param }: Sidebar) {
         onClick={() => setOpen(!open)}
         onKeyUp={() => setOpen(!open)}
       >
-        <span>{activeEntry.name}</span>
+        <span>{activeEntry?.name || ''}</span>
         <div
           className={classNames(
             open && 'rotate-180',
