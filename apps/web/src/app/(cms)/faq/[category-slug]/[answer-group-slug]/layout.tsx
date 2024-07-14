@@ -1,6 +1,6 @@
 import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
 import React from 'react'
-import { getFaqAnswerGroup } from 'src/app/faq/lib/strapi/answerGroup'
+import { getFaqAnswerGroup } from 'src/app/(cms)/faq/lib/strapi/answerGroup'
 import { AnswerGroupLayout } from './components/answer-group-layout'
 
 export const revalidate = 900

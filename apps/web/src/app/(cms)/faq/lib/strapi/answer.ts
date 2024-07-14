@@ -1,5 +1,5 @@
+import { addGhostBody } from 'src/app/(cms)/lib/ghost/addGhostBody'
 import { z } from 'zod'
-import { getGhostBody } from '../ghost/ghost'
 import { strapi } from './strapi'
 
 const schema = z
@@ -36,7 +36,7 @@ export async function getFaqAnswer(id: string) {
 
   const parsed = schema.parse(data)
 
-  const body = await getGhostBody(parsed.ghostSlug)
+  const body = await addGhostBody(parsed, parsed.ghostSlug)
 
   return {
     ...parsed,

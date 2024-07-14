@@ -1,5 +1,5 @@
 import { Container } from '@sushiswap/ui'
-import { getFaqCategoryList } from 'src/app/faq/lib/strapi/categoryList'
+import { getFaqCategoryList } from 'src/app/(cms)/faq/lib/strapi/categoryList'
 import {
   Sidebar,
   SidebarDesktop,
