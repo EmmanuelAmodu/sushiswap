@@ -27,7 +27,7 @@ const API_BASE_URL =
 
 function getApiVersion(chainId: ChainId) {
   if (isRouteProcessor4ChainId(chainId)) {
-    return '/v4'
+    return '/v4_2'
   }
   return ''
 }
@@ -84,7 +84,7 @@ export const useTradeQuery = (
         }`,
       )
       params.searchParams.set('amount', `${amount?.quotient.toString()}`)
-      params.searchParams.set('maxPriceImpact', `${+slippagePercentage / 100}`)
+      params.searchParams.set('maxSlippage', `${+slippagePercentage / 100}`)
       params.searchParams.set('gasPrice', `${gasPrice}`)
       params.searchParams.set('to', `${recipient}`)
       params.searchParams.set('preferSushi', 'true')
