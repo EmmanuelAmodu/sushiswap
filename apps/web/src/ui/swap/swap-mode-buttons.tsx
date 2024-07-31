@@ -13,26 +13,23 @@ import {
 import { ShuffleIcon } from '@sushiswap/ui/icons/ShuffleIcon'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useChainId } from 'wagmi'
 import { PathnameButton } from '../pathname-button'
 
 const useIsTwapSupported = () => {
   const chainId = useChainId()
-  const [isTwapSupported, setIsTwapSupported] = useState(false)
-
-  const validate = useCallback(async () => {
-    const isSupportedChain = await import(
-      /* webpackExports: "isSupportedChain" */ '@orbs-network/twap-ui-sushiswap'
-    ).then((m) => m.isSupportedChain)
-    setIsTwapSupported(isSupportedChain(chainId))
-  }, [chainId])
+  const [isSupportedChainFn, setIsSupportedChainFn] = useState<
+    ((chainId: number) => boolean) | undefined
+  >(undefined)
 
   useEffect(() => {
-    validate()
-  }, [validate])
+    import(
+      /* webpackExports: "isSupportedChain" */ '@orbs-network/twap-ui-sushiswap'
+    ).then((m) => setIsSupportedChainFn(m.isSupportedChain))
+  }, [])
 
-  return isTwapSupported
+  return isSupportedChainFn?.(chainId) ?? false
 }
 
 export const SwapModeButtons = () => {
