@@ -47,6 +47,7 @@ export function useSimulateTrade({
         Boolean(
           address &&
             trade?.tx &&
+            trade?.tx?.data &&
             isRouteProcessor5ChainId(chainId) &&
             trade?.route?.status !== 'NoWay',
         ),
