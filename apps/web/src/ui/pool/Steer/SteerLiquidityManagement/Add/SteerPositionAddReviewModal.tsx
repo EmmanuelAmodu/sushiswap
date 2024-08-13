@@ -137,7 +137,7 @@ export const SteerPositionAddReviewModal: FC<SteerPositionAddReviewModalProps> =
     )
 
     const onError = useCallback((e: Error) => {
-      if (e instanceof UserRejectedRequestError) {
+      if (!(e.cause instanceof UserRejectedRequestError)) {
         createErrorToast(e?.message, true)
       }
     }, [])
@@ -192,7 +192,7 @@ export const SteerPositionAddReviewModal: FC<SteerPositionAddReviewModalProps> =
 
     const {
       writeContractAsync,
-      isLoading: isWritePending,
+      isPending: isWritePending,
       data: hash,
     } = useWriteContract({
       mutation: {

@@ -148,7 +148,7 @@ export const ConcentratedLiquidityRemoveWidget: FC<
   )
 
   const onError = useCallback((e: Error) => {
-    if (e instanceof UserRejectedRequestError) {
+    if (!(e.cause instanceof UserRejectedRequestError)) {
       createErrorToast(e.message, true)
     }
   }, [])
@@ -257,7 +257,7 @@ export const ConcentratedLiquidityRemoveWidget: FC<
 
   const {
     sendTransactionAsync,
-    isLoading: isWritePending,
+    isPending: isWritePending,
     data: hash,
   } = useSendTransaction({
     mutation: {

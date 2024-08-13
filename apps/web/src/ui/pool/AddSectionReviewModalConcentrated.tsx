@@ -199,7 +199,7 @@ export const AddSectionReviewModalConcentrated: FC<
   )
 
   const onError = useCallback((e: Error) => {
-    if (e instanceof UserRejectedRequestError) {
+    if (!(e.cause instanceof UserRejectedRequestError)) {
       createErrorToast(e?.message, true)
     }
   }, [])
@@ -264,7 +264,7 @@ export const AddSectionReviewModalConcentrated: FC<
 
   const {
     sendTransactionAsync,
-    isLoading: isWritePending,
+    isPending: isWritePending,
     data,
   } = useSendTransaction({
     mutation: {

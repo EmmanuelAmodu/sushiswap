@@ -1,10 +1,10 @@
-import { http, PublicClient, createPublicClient } from 'viem'
-import { ChainId, TestnetChainId } from '../chain/index.js'
+import { http, type PublicClient, createPublicClient } from 'viem'
+import { ChainId, type TestnetChainId } from '../chain/index.js'
 import { publicClientConfig } from '../config/index.js'
-import { Type } from '../currency/index.js'
+import type { Type } from '../currency/index.js'
 import { ApeSwapProvider } from './liquidity-providers/ApeSwap.js'
 import { BiswapProvider } from './liquidity-providers/Biswap.js'
-import { CurveProvider } from './liquidity-providers/CurveProvider.js'
+import { CurveProviderWhiteList } from './liquidity-providers/CurveProviderWhitelist.js'
 import { DfynProvider } from './liquidity-providers/Dfyn.js'
 import { DovishV3Provider } from './liquidity-providers/DovishV3.js'
 import { ElkProvider } from './liquidity-providers/Elk.js'
@@ -23,7 +23,6 @@ import { SpookySwapProvider } from './liquidity-providers/SpookySwap.js'
 import { SushiSwapV2Provider } from './liquidity-providers/SushiSwapV2.js'
 import { SushiSwapV3Provider } from './liquidity-providers/SushiSwapV3.js'
 import { TraderJoeProvider } from './liquidity-providers/TraderJoe.js'
-import { TridentProvider } from './liquidity-providers/Trident.js'
 import { UbeSwapProvider } from './liquidity-providers/UbeSwap.js'
 import { UniswapV2Provider } from './liquidity-providers/UniswapV2.js'
 import { UniswapV3Provider } from './liquidity-providers/UniswapV3.js'
@@ -112,7 +111,7 @@ export class DataFetcher {
     ;[
       ApeSwapProvider,
       BiswapProvider,
-      CurveProvider,
+      CurveProviderWhiteList,
       DfynProvider,
       DovishV3Provider,
       ElkProvider,
@@ -126,7 +125,6 @@ export class DataFetcher {
       SushiSwapV3Provider,
       TraderJoeProvider,
       QuickSwapProvider,
-      TridentProvider,
       UbeSwapProvider,
       UniswapV2Provider,
       UniswapV3Provider,

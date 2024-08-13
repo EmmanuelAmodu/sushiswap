@@ -10,7 +10,7 @@ import {
 } from 'sushi/config'
 import { Native, Token, Type } from 'sushi/currency'
 import { PoolCode, deserializePoolsBinary } from 'sushi/router'
-import { deserializePoolCodesJSON } from 'sushi/serializer'
+//import { deserializePoolCodesJSON } from 'sushi/serializer'
 import { Address } from 'viem'
 
 const DEBUG_PRINT = false
@@ -273,8 +273,10 @@ export class ExtractorClient {
         if (DEBUG_PRINT) console.log(`Responded: ${resp.status}`)
         return
       }
-      const data = await resp.text()
-      const pools = deserializePoolCodesJSON(data)
+      //const data = await resp.text()
+      //const pools = deserializePoolCodesJSON(data)
+      const data = new Uint8Array(await resp.arrayBuffer())
+      const { pools } = deserializePoolsBinary(data)
       pools.forEach((p) => {
         const t0 = p.pool.token0
         const t1 = p.pool.token1
@@ -313,8 +315,10 @@ export class ExtractorClient {
         if (DEBUG_PRINT) console.log(`Responded: ${resp.status}`)
         return
       }
-      const data = await resp.text()
-      const pools = deserializePoolCodesJSON(data)
+      //const data = await resp.text()
+      //const pools = deserializePoolCodesJSON(data)
+      const data = new Uint8Array(await resp.arrayBuffer())
+      const { pools } = deserializePoolsBinary(data)
       pools.forEach((p) => {
         const t0 = p.pool.token0
         const t1 = p.pool.token1
@@ -343,8 +347,7 @@ export class ExtractorClient {
     for (let i = 0; i < tokens.length; ++i) {
       for (let j = i + 1; j < tokens.length; ++j) {
         const pairPools = this.poolCodesMap.get(
-          // @ts-ignore
-          tokenPairId(tokens[i], tokens[j]),
+          tokenPairId(tokens[i]!, tokens[j]!),
         )
         if (pairPools !== undefined)
           pairPools.forEach((p) => pools.set(p.pool.uniqueID(), p))
@@ -401,8 +404,7 @@ export class ExtractorClient {
     const tokensUnique: Type[] = []
     tokensSorted.forEach((t) => {
       if (tokensUnique.length === 0) tokensUnique.push(t)
-      // @ts-ignore
-      else if (tokenId(tokensUnique[tokensUnique.length - 1]) !== tokenId(t))
+      else if (tokenId(tokensUnique[tokensUnique.length - 1]!) !== tokenId(t))
         tokensUnique.push(t)
     })
 

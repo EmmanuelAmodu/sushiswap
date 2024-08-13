@@ -114,7 +114,7 @@ export const SteerPositionRemove: FC<SteerPositionRemoveProps> = ({
   )
 
   const onError = useCallback((e: Error) => {
-    if (e instanceof UserRejectedRequestError) {
+    if (!(e.cause instanceof UserRejectedRequestError)) {
       createErrorToast(e?.message, true)
     }
   }, [])
@@ -157,7 +157,7 @@ export const SteerPositionRemove: FC<SteerPositionRemoveProps> = ({
     },
   })
 
-  const { writeContractAsync, isLoading: isWritePending } = useWriteContract({
+  const { writeContractAsync, isPending: isWritePending } = useWriteContract({
     mutation: {
       onSuccess,
       onError,

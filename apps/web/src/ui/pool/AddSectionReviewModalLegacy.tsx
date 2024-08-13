@@ -365,7 +365,7 @@ export const AddSectionReviewModalLegacy: FC<AddSectionReviewModalLegacyProps> =
     )
 
     const onError = useCallback((e: Error) => {
-      if (e instanceof UserRejectedRequestError) {
+      if (!(e.cause instanceof UserRejectedRequestError)) {
         createErrorToast(e?.message, true)
       }
     }, [])
@@ -427,7 +427,7 @@ export const AddSectionReviewModalLegacy: FC<AddSectionReviewModalLegacyProps> =
     const write = writeWithNative.write || writeWithoutNative.write
     const data = writeWithNative.data || writeWithoutNative.data
     const isWritePending =
-      writeWithNative.isLoading || writeWithoutNative.isLoading
+      writeWithNative.isPending || writeWithoutNative.isPending
 
     const { status } = useWaitForTransactionReceipt({ chainId, hash: data })
 

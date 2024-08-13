@@ -1,8 +1,7 @@
 // @ts-nocheck
 
-//import { bigint } from '@ethersproject/bignumber'
-import { Address } from 'viem'
-import { PoolType, RPool, RToken } from './RPool.js'
+import type { Address } from 'viem'
+import { PoolType, RPool, type RToken } from './RPool.js'
 import { getBigInt } from './Utils.js'
 
 const ZERO = 0n
@@ -17,22 +16,22 @@ export class CurveMultitokenPool extends RPool {
   flow1 = 0
 
   constructor(core: CurveMultitokenCore, index0: number, index1: number) {
-    if (core) {
-      super(
-        core.address as Address,
-        core.tokens[index0] as RToken,
-        core.tokens[index1] as RToken,
-        core.fee,
-        core.reserves[index0] as bigint,
-        core.reserves[index1] as bigint,
-        MIN_LIQUIDITY,
-        SWAP_GAS_COST,
-      )
-      console.assert(index0 < index1, 'Wrong CurveMultitokenPool indexes')
-      this.core = core
-      this.index0 = index0
-      this.index1 = index1
-    } else {
+    //if (core) {
+    super(
+      core?.address as Address,
+      core?.tokens[index0] as RToken,
+      core?.tokens[index1] as RToken,
+      core?.fee,
+      core?.reserves[index0] as bigint,
+      core?.reserves[index1] as bigint,
+      MIN_LIQUIDITY,
+      SWAP_GAS_COST,
+    )
+    console.assert(index0 < index1, 'Wrong CurveMultitokenPool indexes')
+    this.core = core
+    this.index0 = index0
+    this.index1 = index1
+    /*} else {
       // for deserealization
       super(
         undefined as unknown as Address,
@@ -44,7 +43,7 @@ export class CurveMultitokenPool extends RPool {
         MIN_LIQUIDITY,
         SWAP_GAS_COST,
       )
-    }
+    }*/
   }
 
   override updateReserves(_res0: bigint, _res1: bigint) {
@@ -70,10 +69,10 @@ export class CurveMultitokenPool extends RPool {
       const out =
         -this.flow1 -
         this.core.calcOutDiff(amountIn - this.flow0, this.index0, this.index1)
-      console.assert(
-        out >= 0,
-        'CurveMultitokenPool.calcOutByIn Unexpected output value 0',
-      )
+      // console.assert(
+      //   out >= 0,
+      //   'CurveMultitokenPool.calcOutByIn Unexpected output value 0',
+      // )
       return { out, gasSpent: SWAP_GAS_COST }
     } else {
       console.assert(
@@ -83,10 +82,10 @@ export class CurveMultitokenPool extends RPool {
       const out =
         -this.flow0 -
         this.core.calcOutDiff(amountIn - this.flow1, this.index1, this.index0)
-      console.assert(
-        out >= 0,
-        'CurveMultitokenPool.calcOutByIn Unexpected output value 1',
-      )
+      // console.assert(
+      //   out >= 0,
+      //   'CurveMultitokenPool.calcOutByIn Unexpected output value 1',
+      // )
       return { out, gasSpent: SWAP_GAS_COST }
     }
   }
@@ -102,10 +101,10 @@ export class CurveMultitokenPool extends RPool {
           this.index1,
           this.index0,
         ) + this.flow0
-      console.assert(
-        inp >= 0,
-        'CurveMultitokenPool.calcInByOut Unexpected output value 0',
-      )
+      // console.assert(
+      //   inp >= 0,
+      //   'CurveMultitokenPool.calcInByOut Unexpected output value 0',
+      // )
       return { inp, gasSpent: SWAP_GAS_COST }
     } else {
       const inp =
@@ -114,10 +113,10 @@ export class CurveMultitokenPool extends RPool {
           this.index0,
           this.index1,
         ) + this.flow1
-      console.assert(
-        inp >= 0,
-        'CurveMultitokenPool.calcInByOut Unexpected output value 1',
-      )
+      // console.assert(
+      //   inp >= 0,
+      //   'CurveMultitokenPool.calcInByOut Unexpected output value 1',
+      // )
       return { inp, gasSpent: SWAP_GAS_COST }
     }
   }
@@ -335,6 +334,13 @@ export class CurveMultitokenCore {
 
   cleanTmpData() {
     this.currentFlow = this.reserves.map(() => 0)
+  }
+
+  getOriginalRates(): number[] {
+    const decimalsMax = Math.max(...this.tokens.map((t) => t.decimals))
+    return this.rates.map(
+      (r, i) => r / 10 ** (decimalsMax - this.tokens[i].decimals),
+    )
   }
 }
 

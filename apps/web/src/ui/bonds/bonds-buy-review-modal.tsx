@@ -117,7 +117,7 @@ export const BondsBuyReviewModal: FC<BondsBuyReviewModal> = ({
   )
 
   const onError = useCallback((e: Error) => {
-    if (e instanceof UserRejectedRequestError) {
+    if (!(e.cause instanceof UserRejectedRequestError)) {
       createErrorToast(e?.message, true)
     }
   }, [])
@@ -158,7 +158,7 @@ export const BondsBuyReviewModal: FC<BondsBuyReviewModal> = ({
 
   const {
     writeContractAsync,
-    isLoading: isWritePending,
+    isPending: isWritePending,
     data,
   } = useWriteContract({
     mutation: {
