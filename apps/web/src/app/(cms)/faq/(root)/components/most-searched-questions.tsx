@@ -1,11 +1,11 @@
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
 import {
-  MostSearchedListEntry,
-  getFaqMostSearchedList,
-} from '../../lib/strapi/mostSearchedQuestionList'
+  FaqMostSearched,
+  getFaqMostSearched,
+} from '@sushiswap/graph-client/strapi'
+import Link from 'next/link'
 
-function Question({ question, url }: MostSearchedListEntry) {
+function Question({ question, url }: FaqMostSearched[number]) {
   return (
     <div className="">
       <Link
@@ -26,7 +26,7 @@ function Question({ question, url }: MostSearchedListEntry) {
 
 function MostSearchedQuestionsDesktop({
   questions,
-}: { questions: MostSearchedListEntry[] }) {
+}: { questions: FaqMostSearched }) {
   const firstHalf = questions.slice(0, Math.ceil(questions.length / 2))
   const secondHalf = questions.slice(Math.ceil(questions.length / 2))
 
@@ -52,7 +52,7 @@ function MostSearchedQuestionsDesktop({
 
 function MostSearchedQuestionsMobile({
   questions,
-}: { questions: MostSearchedListEntry[] }) {
+}: { questions: FaqMostSearched }) {
   return (
     <div className="divide-y divide-slate-500 divide-opacity-50 gap-y-4">
       {questions.map((topic, i) => (
@@ -65,7 +65,7 @@ function MostSearchedQuestionsMobile({
 }
 
 export async function MostSearchedQuestions() {
-  const questions = await getFaqMostSearchedList()
+  const questions = await getFaqMostSearched()
 
   return (
     <div className="flex flex-col space-y-8 md:space-y-12">

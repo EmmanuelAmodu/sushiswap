@@ -6,8 +6,8 @@ import { useRef, useState } from 'react'
 
 import { SearchIcon } from '@heroicons/react-v1/outline'
 import { XIcon } from '@heroicons/react-v1/solid'
+import { getFaqAnswerSearch } from '@sushiswap/graph-client/strapi'
 import { useQuery } from '@tanstack/react-query'
-import { getFaqAnswers } from '../../lib/strapi/answerSearch'
 
 export function SearchBox() {
   const ref = useRef<HTMLDivElement>(null)
@@ -19,10 +19,10 @@ export function SearchBox() {
     setOpen(false)
   })
 
-  const { data, isInitialLoading, isError } = useQuery(
-    ['faq-answers', debouncedQuery],
-    () => getFaqAnswers(debouncedQuery),
-  )
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['faq-answers', debouncedQuery],
+    queryFn: () => getFaqAnswerSearch({ search: debouncedQuery }),
+  })
 
   return (
     <div className="flex flex-col gap-3 relative">
@@ -81,16 +81,13 @@ export function SearchBox() {
                 <p className="text-sm font-semibold mt-4 px-4 text-slate-400">
                   Questions
                 </p>
-                <RowGroup
-                  entries={data?.answers || []}
-                  isLoading={isInitialLoading}
-                />
+                <RowGroup entries={data?.answers || []} isLoading={isLoading} />
                 <p className="text-sm font-semibold mt-4 px-4 text-slate-400">
                   Question Groups
                 </p>
                 <RowGroup
                   entries={data?.answerGroups || []}
-                  isLoading={isInitialLoading}
+                  isLoading={isLoading}
                 />
               </>
             )}

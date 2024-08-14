@@ -14,6 +14,8 @@ export function transformImage(image: ResultOf<typeof ImageFieldsFragment>) {
     alternativeText: image.attributes.alternativeText || '',
     mime: image.attributes.mime,
     hash: image.attributes.hash,
-    provider_metadata: image.attributes.provider_metadata,
+    provider_metadata: image.attributes.provider_metadata as {
+      public_id: string
+    },
   }
 }

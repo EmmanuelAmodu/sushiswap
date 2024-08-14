@@ -1,10 +1,10 @@
+import { getFaqAnswerGroup } from '@sushiswap/graph-client/strapi'
 import { Container } from '@sushiswap/ui'
 import {
   Sidebar,
   SidebarDesktop,
   SidebarMobile,
 } from '../../../components/sidebar'
-import { getFaqAnswerGroup } from '../../../lib/strapi/answerGroup'
 
 export const revalidate = 900
 
@@ -20,11 +20,13 @@ function AnswerGroupLayoutDesktop({
   return (
     <Container
       maxWidth="4xl"
-      className="flex justify-between pb-40 pt-24 px-8 space-x-16"
+      className="justify-between pb-40 pt-24 px-8 space-x-16 grid grid-cols-10"
     >
-      <SidebarDesktop {...sidebar} />
+      <div className="col-span-2">
+        <SidebarDesktop {...sidebar} />
+      </div>
       <div className="min-h-full flex dark:bg-slate-600 bg-[#BFBFBF] w-[2px]" />
-      {children}
+      <div className="col-span-7">{children}</div>
     </Container>
   )
 }
@@ -47,7 +49,10 @@ export async function AnswerGroupLayout({
   children,
   params,
 }: AnswerGroupLayoutProps) {
-  const answerGroup = await getFaqAnswerGroup(params['answer-group-slug'])
+  const answerGroup = await getFaqAnswerGroup({
+    slug: params['answer-group-slug'],
+  })
+
   const sidebarEntries = answerGroup.answers.map((answer) => {
     return {
       name: answer.name,
@@ -63,7 +68,7 @@ export async function AnswerGroupLayout({
 
   return (
     <>
-      <div className="md:block hidden w-full">
+      <div className="md:block hidden w-full pl-[calc(100vw-100%)]">
         <AnswerGroupLayoutDesktop sidebar={sidebar}>
           {children}
         </AnswerGroupLayoutDesktop>

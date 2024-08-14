@@ -1,6 +1,7 @@
+import { getFaqCategory } from '@sushiswap/graph-client/strapi'
 import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
+import { notFound } from 'next/navigation'
 import React from 'react'
-import { getFaqCategory } from '../../lib/strapi/category'
 import { CategoryLayout } from './components/category-layout'
 
 export const revalidate = 900
@@ -12,7 +13,13 @@ export default async function Layout({
   children: React.ReactNode
   params: { 'category-slug': string }
 }) {
-  const category = await getFaqCategory(params['category-slug'])
+  let category
+
+  try {
+    category = await getFaqCategory({ slug: params['category-slug'] })
+  } catch {
+    return notFound()
+  }
 
   return (
     <>

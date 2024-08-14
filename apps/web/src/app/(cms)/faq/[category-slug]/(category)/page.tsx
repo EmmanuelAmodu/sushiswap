@@ -1,12 +1,16 @@
+import { FaqCategory, getFaqCategory } from '@sushiswap/graph-client/strapi'
 import Link from 'next/link'
-import { Category, getFaqCategory } from '../../lib/strapi/category'
+import { notFound } from 'next/navigation'
 
 export const revalidate = 900
 
 function AnswerGroup({
   category,
   answerGroup,
-}: { category: Category; answerGroup: Category['answerGroups'][number] }) {
+}: {
+  category: FaqCategory
+  answerGroup: FaqCategory['answerGroups'][number]
+}) {
   return (
     <div className="space-y-4">
       <div className="text-xl font-medium">{answerGroup.name}</div>
@@ -31,7 +35,13 @@ export default async function FaqCategoryPage({
 }: {
   params: { 'category-slug': string }
 }) {
-  const category = await getFaqCategory(params['category-slug'])
+  let category
+
+  try {
+    category = await getFaqCategory({ slug: params['category-slug'] })
+  } catch {
+    return notFound()
+  }
 
   return (
     <div className="w-full space-y-6">

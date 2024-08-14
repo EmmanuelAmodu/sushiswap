@@ -1,6 +1,7 @@
+import { getFaqAnswerGroup } from '@sushiswap/graph-client/strapi'
 import { Breadcrumb, Container, typographyVariants } from '@sushiswap/ui'
+import { notFound } from 'next/navigation'
 import React from 'react'
-import { getFaqAnswerGroup } from 'src/app/(cms)/faq/lib/strapi/answerGroup'
 import { AnswerGroupLayout } from './components/answer-group-layout'
 
 export const revalidate = 900
@@ -12,11 +13,19 @@ export default async function Layout({
   children: React.ReactNode
   params: { 'answer-group-slug': string }
 }) {
-  const answerGroup = await getFaqAnswerGroup(params['answer-group-slug'])
+  let answerGroup
+
+  try {
+    answerGroup = await getFaqAnswerGroup({
+      slug: params['answer-group-slug'],
+    })
+  } catch {
+    return notFound()
+  }
 
   return (
     <div>
-      <div className="dark:bg-[#19202F]">
+      <div className="dark:bg-[#19202F] w-full pl-[calc(100vw-100%)]">
         <Container maxWidth="4xl" className="px-5 md:px-8 space-y-6 pb-14">
           <Breadcrumb replace={{ '-': ' ' }} truncate={false} />
           <h1 className={typographyVariants({ variant: 'h1' })}>

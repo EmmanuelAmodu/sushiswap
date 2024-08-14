@@ -1,17 +1,20 @@
-import { getFaqAnswer } from '../../../lib/strapi/answer'
+import { getFaqAnswer } from '@sushiswap/graph-client/strapi'
+import { getGhostBody } from 'src/app/(cms)/lib/ghost/ghost'
 
 export const revalidate = 3600
 
 export default async function AnswerPage({
   params,
 }: { params: { 'answer-slug': string } }) {
-  const answer = await getFaqAnswer(params['answer-slug'])
+  const answer = await getFaqAnswer({ slug: params['answer-slug'] })
+
+  const body = await getGhostBody(answer.ghostSlug)
 
   return (
     <div
       className="prose dark:!prose-invert prose-slate"
       dangerouslySetInnerHTML={{
-        __html: answer.body || '',
+        __html: body || '',
       }}
     />
   )

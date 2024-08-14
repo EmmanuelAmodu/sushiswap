@@ -1,5 +1,5 @@
+import { getFaqCategories } from '@sushiswap/graph-client/strapi'
 import { Container } from '@sushiswap/ui'
-import { getFaqCategoryList } from 'src/app/(cms)/faq/lib/strapi/categoryList'
 import {
   Sidebar,
   SidebarDesktop,
@@ -43,7 +43,7 @@ function CategoryLayoutMobile({
 }
 
 export async function CategoryLayout({ children }: CategoryLayoutProps) {
-  const categories = await getFaqCategoryList()
+  const categories = await getFaqCategories({ sort: ['id'] })
   const sidebarEntries = categories.map((category) => {
     return {
       name: category.name,

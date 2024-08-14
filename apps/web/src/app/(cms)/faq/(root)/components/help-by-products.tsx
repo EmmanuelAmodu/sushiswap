@@ -1,11 +1,11 @@
+import {
+  type FaqProducts,
+  getFaqProducts,
+} from '@sushiswap/graph-client/strapi'
 import { CloudinaryImage, classNames } from '@sushiswap/ui'
 import Link from 'next/link'
-import {
-  ProductListEntry,
-  getFaqProductList,
-} from '../../lib/strapi/productList'
 
-function Block({ name, url, image }: ProductListEntry) {
+function Block({ name, description, url, image }: FaqProducts[number]) {
   return (
     <Link
       href={url}
@@ -15,24 +15,28 @@ function Block({ name, url, image }: ProductListEntry) {
         'dark:bg-white dark:bg-opacity-5 dark:border-slate-500 dark:border-opacity-20',
       )}
     >
-      <CloudinaryImage
-        alt={image.alternativeText}
-        src={image.provider_metadata.public_id}
-        width={image.width}
-        height={image.height}
-        sizes="100vw"
-        className="h-14 w-min"
-      />
+      {image ? (
+        <CloudinaryImage
+          alt={image.alternativeText}
+          src={image.provider_metadata.public_id}
+          width={image.width}
+          height={image.height}
+          sizes="100vw"
+          className="h-14 w-min"
+        />
+      ) : null}
       <div className="space-y-3 flex flex-col justify-center text-center">
         <div className="text-lg font-bold">{name}</div>
-        <div className="text-sm dark:text-white text-opacity-70">{`Lorem ipsum dolor sit amet, consectetur adipiscing elit.`}</div>
+        <div className="text-sm dark:text-white text-opacity-70">
+          {description}
+        </div>
       </div>
     </Link>
   )
 }
 
 export async function HelpByProducts() {
-  const products = await getFaqProductList()
+  const products = await getFaqProducts()
 
   return (
     <div className="md:space-y-12">

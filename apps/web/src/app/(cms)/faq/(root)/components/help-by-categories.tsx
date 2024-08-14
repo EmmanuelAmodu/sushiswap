@@ -1,11 +1,12 @@
 import { classNames } from '@sushiswap/ui'
 import Link from 'next/link'
-import {
-  CategoryListEntry,
-  getFaqCategoryList,
-} from '../../lib/strapi/categoryList'
 
-function Block({ name, url }: CategoryListEntry) {
+import {
+  type FaqCategories,
+  getFaqCategories,
+} from '@sushiswap/graph-client/strapi'
+
+function Block({ name, url }: FaqCategories[number]) {
   return (
     <Link
       href={url}
@@ -21,7 +22,7 @@ function Block({ name, url }: CategoryListEntry) {
 }
 
 export async function HelpByCategories() {
-  const categories = await getFaqCategoryList()
+  const categories = await getFaqCategories({ sort: ['id'] })
 
   return (
     <div className="md:space-y-12">
