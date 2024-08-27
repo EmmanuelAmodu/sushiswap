@@ -1,4 +1,4 @@
-import { createClient } from '@sushiswap/database'
+import { createDirectClient } from '@sushiswap/database'
 import { createConfig, getToken as getTokenFromContract } from '@wagmi/core'
 import { ChainId } from 'sushi/chain'
 import { publicChains, publicTransports } from 'sushi/config'
@@ -29,7 +29,7 @@ export async function getToken(chainId: number, address: string) {
   //   }
   // }
 
-  const client = await createClient()
+  const client = await createDirectClient()
   try {
     const token = await client.token.findFirstOrThrow({
       select: {
@@ -70,7 +70,7 @@ export async function getToken(chainId: number, address: string) {
 }
 
 export async function getTokenIdsByChainId(chainId: number) {
-  const client = await createClient()
+  const client = await createDirectClient()
   const ids = await client.token.findMany({
     select: {
       id: true,
@@ -87,7 +87,7 @@ export async function getTokenIdsByChainId(chainId: number) {
 }
 
 export async function getTokenAddressesByChainId(chainId: number) {
-  const client = await createClient()
+  const client = await createDirectClient()
   const addresses = await client.token.findMany({
     select: {
       address: true,
@@ -104,7 +104,7 @@ export async function getTokenAddressesByChainId(chainId: number) {
 }
 
 export async function getTokensByChainId(chainId: number) {
-  const client = await createClient()
+  const client = await createDirectClient()
   const tokens = await client.token.findMany({
     select: {
       id: true,
@@ -125,7 +125,7 @@ export async function getTokensByChainId(chainId: number) {
 }
 
 export async function getTokens() {
-  const client = await createClient()
+  const client = await createDirectClient()
   const tokens = await client.token.findMany({
     select: {
       id: true,
@@ -146,7 +146,7 @@ export async function getTokens() {
 }
 
 export async function getPopularTokens(chainId: number) {
-  const client = await createClient()
+  const client = await createDirectClient()
 
   const approvedTokens = await client.token.findMany({
     select: {
@@ -206,7 +206,7 @@ export async function getPopularTokens(chainId: number) {
 }
 
 export async function getCommonTokens(chainId: number) {
-  const client = await createClient()
+  const client = await createDirectClient()
   const tokens = await client.token.findMany({
     select: {
       id: true,
@@ -226,7 +226,7 @@ export async function getCommonTokens(chainId: number) {
 }
 
 export async function getTokensByAddress(address: string) {
-  const client = await createClient()
+  const client = await createDirectClient()
   const tokens = await client.token.findMany({
     select: {
       id: true,
