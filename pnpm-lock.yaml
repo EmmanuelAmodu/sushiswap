@@ -1072,8 +1072,8 @@ importers:
         specifier: 5.6.0
         version: 5.6.0(prisma@5.6.0)
       '@prisma/extension-accelerate':
-        specifier: ^0.6.2
-        version: 0.6.2(@prisma/client@5.6.0(prisma@5.6.0))
+        specifier: 1.1.0
+        version: 1.1.0(@prisma/client@5.6.0(prisma@5.6.0))
     devDependencies:
       '@sushiswap/jest-config':
         specifier: workspace:*
@@ -6270,8 +6270,8 @@ packages:
   '@prisma/engines@5.6.0':
     resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
 
-  '@prisma/extension-accelerate@0.6.2':
-    resolution: {integrity: sha512-KIBVPeWt8qaSg7wQ+TXmCVeUDoW75whtXcdS9dbHxRoO2OWFH5I9+qbkHBhx5Wj/h1wQpS8usuxGnsZqiBjUpQ==}
+  '@prisma/extension-accelerate@1.1.0':
+    resolution: {integrity: sha512-sESjhBZ4ywQjAVpKzsfhxyNu+9txIM5I6M1MPBaJBq/xDlqmniIAhlwIEt9KLtO80zqPxqbZYes18zrkgYqNiQ==}
     engines: {node: '>=16'}
     peerDependencies:
       '@prisma/client': '>=4.16.1'
@@ -14327,6 +14327,7 @@ packages:
 
   glob@7.1.7:
     resolution: {integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@7.2.0:
     resolution: {integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==}
@@ -21380,6 +21381,9 @@ packages:
 
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
+
+  tslib@2.7.0:
+    resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
   tsort@0.0.1:
     resolution: {integrity: sha512-Tyrf5mxF8Ofs1tNoxA13lFeZ2Zrbd6cKbuH3V+MQ5sb6DtBj5FjrXVsRWT8YvNAQTqNoz66dz1WsbigI22aEnw==}
@@ -29410,7 +29414,7 @@ snapshots:
 
   '@prisma/engines@5.6.0': {}
 
-  '@prisma/extension-accelerate@0.6.2(@prisma/client@5.6.0(prisma@5.6.0))':
+  '@prisma/extension-accelerate@1.1.0(@prisma/client@5.6.0(prisma@5.6.0))':
     dependencies:
       '@prisma/client': 5.6.0(prisma@5.6.0)
 
@@ -36087,7 +36091,7 @@ snapshots:
 
   async-mutex@0.2.6:
     dependencies:
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   async-sema@3.1.1: {}
 
@@ -44396,7 +44400,7 @@ snapshots:
     dependencies:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
-      tslib: 2.6.3
+      tslib: 2.7.0
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -51152,6 +51156,8 @@ snapshots:
   tslib@2.6.2: {}
 
   tslib@2.6.3: {}
+
+  tslib@2.7.0: {}
 
   tsort@0.0.1: {}
 
