@@ -3,6 +3,8 @@ import { BITQUERY_ENDPOINT } from '~tron/_common/lib/bitquery/bitquery-endpoint'
 import { getOptions } from '~tron/_common/lib/bitquery/bitquery-options'
 import { getTronInUSDT } from '~tron/_common/lib/bitquery/queries/getTronInUSDT'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(): Promise<NextResponse> {
   try {
     const query = getTronInUSDT()
