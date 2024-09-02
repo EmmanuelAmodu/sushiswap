@@ -7,6 +7,8 @@ export async function GET(): Promise<NextResponse> {
   try {
     const query = getTronInUSDT()
 
+    console.log(process.env)
+
     const options = getOptions(query)
 
     const res = await fetch(BITQUERY_ENDPOINT, {
