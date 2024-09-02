@@ -7,7 +7,7 @@ export async function GET(): Promise<NextResponse> {
   try {
     const query = getTronInUSDT()
 
-    console.log(process.env)
+    console.log('heloo!!!', process.env['BITQUERY_API_KEY'])
 
     const options = getOptions(query)
 
