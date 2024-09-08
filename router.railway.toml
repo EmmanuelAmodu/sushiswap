@@ -1,0 +1,18 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "./Dockerfile.router"
+watchPatterns = ["apis/router/**", "packages/**", "!/*.md", "bun.lockb", "package.json", "Dockerfile.router", "router.railway.toml"]
+
+[deploy]
+numReplicas = 1
+healthcheckPath = "/health"
+sleepApplication = true
+restartPolicyType = "ALWAYS"
+restartPolicyMaxRetries = 15
+
+[environments.pr.deploy]
+sleepApplication = true
+
+[environments.production-testnet.deploy]
+sleepApplication = false
+numReplicas = 2

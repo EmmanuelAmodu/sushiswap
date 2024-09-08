@@ -1,107 +1,140 @@
-import { FileHandle, mkdir, open } from 'node:fs/promises'
-import path from 'path'
+import { Collection, MongoClient } from "mongodb";
 
-type ResolveFunction = () => void
+type ResolveFunction = () => void;
 
-// Attention !!! No release timeout check !!!!
+// Mutex class to ensure sequential execution
 class Mutex {
-  taken = false
-  resolves: ResolveFunction[] = []
+	taken = false;
+	resolves: ResolveFunction[] = [];
 
-  async takeTurn(): Promise<void> {
-    if (!this.taken) {
-      this.taken = true
-      return
-    }
-    return new Promise((res) => this.resolves.push(res))
-  }
+	async takeTurn(): Promise<void> {
+		if (!this.taken) {
+			this.taken = true;
+			return;
+		}
+		return new Promise((res) => this.resolves.push(res));
+	}
 
-  returnTurn() {
-    const res = this.resolves.shift()
-    if (res === undefined) this.taken = false
-    else {
-      res()
-    }
-  }
+	returnTurn() {
+		const res = this.resolves.shift();
+		if (res === undefined) {
+			this.taken = false;
+		} else {
+			res();
+		}
+	}
 }
 
-// Attention!!! No records with '\n' !!!
+const dbUrl = process.env.MONGO_URL || "mongodb://localhost:27017";
+const client: MongoClient = new MongoClient(dbUrl);
+
 export class PermanentCache<CacheRecord> {
-  filePath?: string
-  file?: FileHandle
-  readOnly: boolean
-  lock: Mutex = new Mutex()
+	private _isConnected = false;
+	private _collection?: Collection;
+	private lock: Mutex = new Mutex();
+	private dbName: string;
+	private collectionName: string;
+	private cacheReadOnly: boolean;
 
-  // type RecordType = Record<Fields, unknown>
+	constructor(cacheReadOnly: boolean, dbName: string, collectionName: string) {
+		// remove all special characters from the database and collection names
+		this.cacheReadOnly = cacheReadOnly;
+		this.dbName = dbName.replace(/[^a-zA-Z0-9]/g, "");
+		this.collectionName = collectionName.replace(/[^a-zA-Z0-9]/g, "");
+		console.log(`Database: ${this.dbName}, Collection: ${this.collectionName}`);
+		client.on("open", () => {
+			this._isConnected = true;
+		});
 
-  constructor(cacheReadOnly: boolean, ...paths: string[]) {
-    this.readOnly = cacheReadOnly
-    if (paths.length > 0 && paths[0] !== '') {
-      const filePath = path.resolve(...paths)
-      this.filePath = filePath
-    }
-  }
+		client.on("close", () => {
+			this._isConnected = false;
+		});
+	}
 
-  async getAllRecords(): Promise<CacheRecord[]> {
-    if (this.filePath === undefined) return []
+	// Ensure MongoDB connection and collection are initialized
+	private async initializeMongoClient() {
+		if (!this._isConnected) {
+			await client.connect();
+		}
+		const db = client.db(this.dbName);
+		this._collection = db.collection(this.collectionName);
+	}
 
-    let records: CacheRecord[] = []
-    await this.lock.takeTurn()
-    // read from the beginning
-    let file
-    try {
-      file = await open(this.filePath)
-    } catch (_e) {
-      this.lock.returnTurn()
-      return []
-    }
-    try {
-      const data = await file.readFile('utf8')
-      let failCount = 0
-      records = data
-        .split('\n')
-        .filter((r) => r !== '')
-        .map((s) => {
-          try {
-            return JSON.parse(s) as CacheRecord
-          } catch (_e) {
-            ++failCount
-          }
-        })
-        .filter((r) => r !== undefined) as CacheRecord[]
-      await file.close()
-      if (failCount > 0)
-        console.error(
-          `Cache ${this.filePath} error: ${failCount}/${
-            records.length + failCount
-          } records are incorrect`,
-        )
-    } catch (_e) {
-      throw new Error(
-        `Cache ${this.filePath} is fatal incorrect! Please fix it or remove file`,
-      )
-    }
-    this.lock.returnTurn()
-    return records
-  }
+	private async ensureConnection() {
+		if (!this._collection) {
+			await this.initializeMongoClient();
+		}
+	}
 
-  async add(record: CacheRecord) {
-    if (this.filePath === undefined || this.readOnly) return
-    await this.lock.takeTurn()
-    try {
-      if (this.file === undefined) {
-        try {
-          const dirName = path.dirname(this.filePath)
-          mkdir(dirName, { recursive: true })
-        } catch (_e) {
-          // do nothing
-        }
-        this.file = await open(this.filePath, 'a')
-      }
-      await this.file.appendFile(`${JSON.stringify(record)}\n`)
-    } catch (_e) {
-      // don't do anything
-    }
-    this.lock.returnTurn()
-  }
+	get collection() {
+		return this._collection;
+	}
+
+	get isConnected() {
+		return this._isConnected;
+	}
+
+	// Get all records from the collection
+	async getAllRecords(): Promise<CacheRecord[]> {
+		await this.ensureConnection();
+
+		await this.lock.takeTurn();
+		try {
+			const records = await this._collection?.find({}).toArray();
+			return records as CacheRecord[];
+		} finally {
+			this.lock.returnTurn();
+		}
+	}
+
+	async getSomeRecords({
+		query = {},
+		skip = 0,
+		limit = 5,
+	}: { limit?: number; query?: object; skip?: number } = {}): Promise<
+		CacheRecord[]
+	> {
+		await this.ensureConnection();
+
+		await this.lock.takeTurn();
+		try {
+			const records = await this._collection
+				?.find(query)
+				.limit(limit)
+				.skip(skip)
+				.toArray();
+			return records as CacheRecord[];
+		} finally {
+			this.lock.returnTurn();
+		}
+	}
+
+	// Add a new record to the collection
+	async add(record: CacheRecord) {
+		if (!this.cacheReadOnly) {
+			throw new Error("Cache is read only");
+		}
+
+		await this.ensureConnection();
+
+		await this.lock.takeTurn();
+		try {
+			await this._collection?.insertOne(
+				record as unknown as Record<string, unknown>,
+			);
+		} finally {
+			this.lock.returnTurn();
+		}
+	}
+
+	async connect() {
+		if (!this._isConnected) {
+			await client.connect();
+		}
+	}
+
+	// Close MongoDB client connection
+	async close() {
+		await client.close();
+	}
 }
