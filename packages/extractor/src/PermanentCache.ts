@@ -111,9 +111,9 @@ export class PermanentCache<CacheRecord> {
 
 	// Add a new record to the collection
 	async add(record: CacheRecord) {
-		if (!this.cacheReadOnly) {
-			throw new Error("Cache is read only");
-		}
+		// if (!this.cacheReadOnly) {
+		// 	throw new Error("Cache is read only");
+		// }
 
 		await this.ensureConnection();
 
