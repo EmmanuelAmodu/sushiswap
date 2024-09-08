@@ -75,12 +75,12 @@ export const ClaimItem: FC<ClaimItem> = ({ chainId, account, claim }) => {
       <div className="flex flex-col gap-0.5">
         <span className="text-sm font-medium text-gray-600 dark:text-white">
           {isLoading ? (
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <SkeletonCircle radius={24} />
               <SkeletonText fontSize="sm" className="max-w-[100px]" />
             </div>
           ) : token ? (
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <Badge
                 position="bottom-right"
                 badgeContent={
@@ -97,7 +97,7 @@ export const ClaimItem: FC<ClaimItem> = ({ chainId, account, claim }) => {
         </span>
       </div>
       <div className="flex justify-end">
-        <span className="w-full text-right flex justify-end text-sm font-semibold text-gray-900 dark:text-white">
+        <span className="flex justify-end w-full text-sm font-semibold text-right text-gray-900 dark:text-white">
           {isLoading ? (
             <SkeletonText className="max-w-[75px]" align="right" />
           ) : token ? (
@@ -132,7 +132,7 @@ export const ClaimItem: FC<ClaimItem> = ({ chainId, account, claim }) => {
                     disabled={isClaimPending}
                     loading={isClaimPending}
                   >
-                    <div className="flex gap-1 items-center">Claim</div>
+                    <div className="flex items-center gap-1">Claim</div>
                   </Button>
                 )}
               </Checker.Network>
