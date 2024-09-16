@@ -15,4 +15,4 @@ sleepApplication = true
 
 [environments.production.deploy]
 sleepApplication = false
-numReplicas = 2
+numReplicas = 1
