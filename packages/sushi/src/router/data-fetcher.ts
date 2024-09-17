@@ -18,6 +18,7 @@ import {
 import { NativeWrapProvider } from './liquidity-providers/NativeWrapProvider.js'
 import { NetSwapProvider } from './liquidity-providers/NetSwap.js'
 import { PancakeSwapProvider } from './liquidity-providers/PancakeSwap.js'
+import { PepperV3Provider } from './liquidity-providers/PepperV3.js'
 import { QuickSwapProvider } from './liquidity-providers/QuickSwap.js'
 import { SpookySwapProvider } from './liquidity-providers/SpookySwap.js'
 import { SushiSwapV2Provider } from './liquidity-providers/SushiSwapV2.js'
@@ -123,6 +124,7 @@ export class DataFetcher {
       SpookySwapProvider,
       SushiSwapV2Provider,
       SushiSwapV3Provider,
+      PepperV3Provider,
       TraderJoeProvider,
       QuickSwapProvider,
       UbeSwapProvider,
