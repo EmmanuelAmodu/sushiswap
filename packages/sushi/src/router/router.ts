@@ -158,6 +158,25 @@ export interface RPParams {
 export type PoolFilter = (list: RPool) => boolean
 
 export class Router {
+  static findPepperRoute(
+    poolCodesMap: Map<string, PoolCode>,
+    chainId: ChainId,
+    fromToken: Type,
+    amountIn: bigint,
+    toToken: Type,
+    gasPrice: number,
+  ) {
+    return Router.findBestRoute(
+      poolCodesMap,
+      chainId,
+      fromToken,
+      amountIn,
+      toToken,
+      gasPrice,
+      [LiquidityProviders.NativeWrap, LiquidityProviders.PepperV3],
+    )
+  }
+
   static findSushiRoute(
     poolCodesMap: Map<string, PoolCode>,
     chainId: ChainId,
