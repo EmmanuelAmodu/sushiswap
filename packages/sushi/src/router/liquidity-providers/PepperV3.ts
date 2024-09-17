@@ -10,7 +10,7 @@ export class PepperV3Provider extends UniswapV3BaseProvider {
       // [ChainId.ARBITRUM]: '0x1af415a1EbA07a4986a52B6f2e7dE7003D82231e',
       // [ChainId.AVALANCHE]: '0x3e603C14aF37EBdaD31709C4f848Fc6aD5BEc715',
       // [ChainId.BSC]: '0x126555dd55a39328F69400d6aE4F782Bd4C34ABb',
-      [ChainId.ETHEREUM]: '0x967171E6867cdC00F551080544fAd6b3575beE22',
+      [ChainId.ETHEREUM]: '0xe5d3CdB374EC5CEde0F98BAB2660bd78Df7B9ECb',
       // [ChainId.FANTOM]: '0x7770978eED668a3ba661d51a773d3a992Fc9DDCB',
       // [ChainId.FUSE]: '0x1b9d177CcdeA3c79B6c8F40761fc8Dc9d0500EAa',
       // [ChainId.GNOSIS]: '0xf78031CBCA409F2FB6876BDFDBc1b2df24cF9bEf',
@@ -44,7 +44,7 @@ export class PepperV3Provider extends UniswapV3BaseProvider {
       // [ChainId.BSC]:
       //   '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54',
       [ChainId.ETHEREUM]:
-        '0x1797c31ce3c5634b82c8271a867b03f5a6cfc37b81562c4673f281a66d0e5189',
+        '0xd9d8a17b3bd752cf8a04dc5e0c874a1af6cd0e3dd0962383e209a7de371f3b6e',
       // [ChainId.FANTOM]:
       //   '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54',
       // [ChainId.FUSE]:

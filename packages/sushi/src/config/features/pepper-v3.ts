@@ -1,7 +1,7 @@
 import { ChainId } from '../../chain/index.js'
 
 const POOL_INIT_CODE_HASH =
-  '0x1797c31ce3c5634b82c8271a867b03f5a6cfc37b81562c4673f281a66d0e5189'
+  '0xd9d8a17b3bd752cf8a04dc5e0c874a1af6cd0e3dd0962383e209a7de371f3b6e'
 
 /**
  * The default factory enabled fee amounts, denominated in hundredths of bips.
@@ -37,7 +37,7 @@ export const PEPPER_V3_FACTORY_ADDRESS: Record<PepperV3ChainId, `0x${string}`> =
     // [ChainId.BSC]: '0x126555dd55a39328F69400d6aE4F782Bd4C34ABb',
     // [ChainId.BTTC]: '0xBBDe1d67297329148Fe1ED5e6B00114842728e65',
     // [ChainId.CELO]: '',
-    [ChainId.ETHEREUM]: '0x967171E6867cdC00F551080544fAd6b3575beE22',
+    [ChainId.ETHEREUM]: '0xe5d3CdB374EC5CEde0F98BAB2660bd78Df7B9ECb',
     // [ChainId.FANTOM]: '0x7770978eED668a3ba661d51a773d3a992Fc9DDCB',
     // [ChainId.FUSE]: '0x1b9d177CcdeA3c79B6c8F40761fc8Dc9d0500EAa',
     // [ChainId.GNOSIS]: '0xf78031CBCA409F2FB6876BDFDBc1b2df24cF9bEf',
